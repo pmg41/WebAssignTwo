@@ -3,7 +3,7 @@
 header("content-type: application/json"); 
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Method: POST');
-header('Access-Control-Allow-Heade  rs: Content-Type, Access-Control-Allow-Headers, Authorization,  X-Requested-With');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization,  X-Requested-With');
 
 
 include_once "Database.php";
@@ -14,30 +14,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $postData = json_decode(file_get_contents("php://input"), true);
     if(empty($postData)){
         $OrderData = insertOrder($_POST);
-        echo json_encode($OrderData);
     }else{
         $OrderData = insertOrder($postData);
-        echo json_encode($OrderData);
     }
 }
 //GET
 else if ($_SERVER["REQUEST_METHOD"] === "GET") {
-  fetchAllOrders();
+    fetchAllOrders();
 }
 //PUT
 else if ($_SERVER["REQUEST_METHOD"] === "PUT") {
     $updateData = json_decode(file_get_contents("php://input"), true);
-    $pid= $_GET['id'] ?? null ;
-    $updateOrder = updateOrder($updateData,$pid);
-    echo $updateOrder;
+    $oid= $_GET['id'] ?? null ;
+    if($oid != null) {
+        $updateOrder = updateOrder($updateData,$oid);
+        echo $updateOrder;
+    }
 } 
 //DELETE
 else if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
   $deleteData = json_decode(file_get_contents("php://input"), true);
-  $pid= $_GET['id'] ?? null ;
-  if($pid != null) {
-    $deleteOrder = deleteOrderById($pid);
-    echo $deleteOrder;
+  $oid= $_GET['id'] ?? null ;
+  if($oid != null) {
+    $deleteOrder = deleteOrderById($oid);
+    echo json_decode($deleteOrder);
   } else {
     echo "Invalid Order id";
   }  

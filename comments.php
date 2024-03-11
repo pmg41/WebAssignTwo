@@ -14,10 +14,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $postData = json_decode(file_get_contents("php://input"), true);
     if(empty($postData)){
         $CommentData = insertComment($_POST);
-        echo  json_encode($CommentData);
+        // echo  json_encode($CommentData);
     }else{
         $CommentData = insertComment($postData);
-        echo  json_encode($CommentData);
+        // echo  json_encode($CommentData);
     }
 }
 //GET
@@ -27,16 +27,16 @@ else if ($_SERVER["REQUEST_METHOD"] === "GET") {
 //PUT
 else if ($_SERVER["REQUEST_METHOD"] === "PUT") {
     $updateData = json_decode(file_get_contents("php://input"), true);
-    $pid= $_GET['id'] ?? null ;
-    $updateComment = updateComment($updateData,$pid);
+    $cid= $_GET['id'] ?? null ;
+    $updateComment = updateComment($updateData,$cid);
     echo $updateComment;
 } 
 //DELETE
 else if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
   $deleteData = json_decode(file_get_contents("php://input"), true);
-  $pid= $_GET['id'] ?? null ;
-  if($pid != null) {
-    $deleteComment = deleteCommentById($pid);
+  $cid= $_GET['id'] ?? null ;
+  if($cid != null) {
+    $deleteComment = deleteCommentById($cid);
     echo $deleteComment;
   } else {
     echo "Invalid Comment id";

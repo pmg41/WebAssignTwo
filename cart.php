@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $CartData = insertCart($postData);
         echo  json_encode($CartData);
     }
+}
 //GET
 else if ($_SERVER["REQUEST_METHOD"] === "GET") {
   fetchAllCarts();

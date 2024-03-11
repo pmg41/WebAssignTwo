@@ -7,7 +7,7 @@ header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 
 include_once "Database.php";
-include_once "FuncProvider.php";
+include_once "ProductFuncProvider.php";
 
 //POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -17,7 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }else{
         $productData = insertProduct($postData);
     }
-    echo json_encode($postData);
 }
 //GET
 else if ($_SERVER["REQUEST_METHOD"] === "GET") {

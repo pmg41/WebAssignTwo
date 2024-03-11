@@ -7,7 +7,7 @@ header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 
 include_once "Database.php";
-include_once "FuncProvider.php";
+include_once "CommentFuncProvider.php";
 
 //POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

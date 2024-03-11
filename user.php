@@ -7,23 +7,24 @@ header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 
 include_once "Database.php";
-include_once "FuncProvider.php";
+include_once "UserFuncProvider.php";
 
 //POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $postData = json_decode(file_get_contents("php://input"), true);
     if(empty($postData)){
         $userData = insertUser($_POST);
-        echo json_encode($userData);
+        // echo $userData;
     }else{
         $userData = insertUser($postData);
-        echo json_encode($userData);
+        // echo $userData;
     }
-    echo json_encode($postData);
+    // echo json_encode($postData);
 }
 //GET
 else if ($_SERVER["REQUEST_METHOD"] === "GET") {
-  fetchAllUsers();
+  $outputData = fetchAllUsers();
+  echo json_encode($outputData);
 }
 //PUT
 else if ($_SERVER["REQUEST_METHOD"] === "PUT") {

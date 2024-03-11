@@ -3,11 +3,11 @@
 header("content-type: application/json"); 
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Method: POST');
-header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization,  X-Requested-With');
+header('Access-Control-Allow-Heade  rs: Content-Type, Access-Control-Allow-Headers, Authorization,  X-Requested-With');
 
 
 include_once "Database.php";
-include_once "FuncProvider.php";
+include_once "OrderFuncProvider.php";
 
 //POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

@@ -7,17 +7,17 @@ header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 
 include_once "Database.php";
-include_once "FuncProvider.php";
+include_once "CartFuncProvider.php";
 
 //POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $postData = json_decode(file_get_contents("php://input"), true);
     if(empty($postData)){
         $CartData = insertCart($_POST);
-        echo  json_encode($CartData);
+        // echo  json_encode($CartData);
     }else{
         $CartData = insertCart($postData);
-        echo  json_encode($CartData);
+        // echo  json_encode($CartData);
     }
 }
 //GET

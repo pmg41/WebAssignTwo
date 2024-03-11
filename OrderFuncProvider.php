@@ -64,7 +64,7 @@ function updateOrder($updateData,$OrderID) {
     $userId = $updateData["user_id"];
     $totalAmount = $updateData["total_amount"];
     if($OrderID != null) {
-        $sql = "INSERT INTO orders (user_id, total_amount) VALUES ('$userId', '$totalAmount')";
+        $sql = "UPDATE orders SET user_id='$userId', total_amount='$totalAmount' WHERE id=$OrderID";
         // Run the UPDATE query
         if(mysqli_query($conn, $sql)) {
             $data = [

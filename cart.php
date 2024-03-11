@@ -1,58 +1,50 @@
 <?php
-// Include database connection file
-include_once("Database.php");
 
-// Function to fetch all carts from the database
-function getAllCarts() {
-    global $conn;
-    $query = "SELECT * FROM cart";
-    $result = mysqli_query($conn, $query);
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+header("content-type: application/json"); 
+header("Access-Control-Allow-Origin: *");
+header('Access-Control-Allow-Method: POST');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization,  X-Requested-With');
+
+
+include_once "Database.php";
+include_once "FuncProvider.php";
+
+//POST
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $postData = json_decode(file_get_contents("php://input"), true);
+    if(empty($postData)){
+        $CartData = insertCart($_POST);
+        echo  json_encode($CartData);
+    }else{
+        $CartData = insertCart($postData);
+        echo  json_encode($CartData);
+    }
+//GET
+else if ($_SERVER["REQUEST_METHOD"] === "GET") {
+  fetchAllCarts();
 }
+//PUT
+else if ($_SERVER["REQUEST_METHOD"] === "PUT") {
+    $updateData = json_decode(file_get_contents("php://input"), true);
+    $pid= $_GET['id'] ?? null ;
+    $updateCart = updateCart($updateData,$pid);
+    echo $updateCart;
+} 
+//DELETE
+else if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
+  $deleteData = json_decode(file_get_contents("php://input"), true);
+  $pid= $_GET['id'] ?? null ;
+  if($pid != null) {
+    $deleteCart = deleteCartById($pid);
+    echo $deleteCart;
+  } else {
+    echo "Invalid Cart id";
+  }  
 
-// Function to add a new cart to the database
-function addCart($products, $quantities, $user_id) {
-    global $conn;
-    $products = mysqli_real_escape_string($conn, $products);
-    $quantities = mysqli_real_escape_string($conn, $quantities);
-    $user_id = mysqli_real_escape_string($conn, $user_id);
-    
-    $query = "INSERT INTO cart (products, quantities, user_id) VALUES ('$products', '$quantities', '$user_id')";
-    return mysqli_query($conn, $query);
+} 
+else {
+  http_response_code(405);
+  echo json_encode(["error" => "Unsupported request method"]);
 }
-
-// Function to update an existing cart in the database
-function updateCart($id, $products, $quantities, $user_id) {
-    global $conn;
-    $id = mysqli_real_escape_string($conn, $id);
-    $products = mysqli_real_escape_string($conn, $products);
-    $quantities = mysqli_real_escape_string($conn, $quantities);
-    $user_id = mysqli_real_escape_string($conn, $user_id);
-    
-    $query = "UPDATE cart SET products='$products', quantities='$quantities', user_id='$user_id' WHERE id='$id'";
-    return mysqli_query($conn, $query);
-}
-
-// Function to delete a cart from the database
-function deleteCart($id) {
-    global $conn;
-    $id = mysqli_real_escape_string($conn, $id);
-    
-    $query = "DELETE FROM cart WHERE id='$id'";
-    return mysqli_query($conn, $query);
-}
-
-// Function to fetch a single cart by ID from the database
-function getCartById($id) {
-    global $conn;
-    $id = mysqli_real_escape_string($conn, $id);
-    
-    $query = "SELECT * FROM cart WHERE id='$id'";
-    $result = mysqli_query($conn, $query);
-    return mysqli_fetch_assoc($result);
-}
-
-// Add CRUD operations for Comments, User, and Order entities here similarly
 
 ?>
- 
